@@ -108,11 +108,11 @@ aclog_thread = Thread.new do
     @aclog = @aclog.lines[-6..-1].reverse.join
     
     @aclog.each_line do |line|
-      @flight_plan.acinfo = line if line.include? "Aircraft info for #{@selected_aircraft}"
+      @flight_plan.acinfo = line.gsub /.*\s*(Aircraft info for \w*:\s*)/, '' if line.include? "Aircraft info for #{@selected_aircraft}"
     end
     
     @flight_plan.acinfo = "Aircraft type code '#{@flight_plan.aircraft}' not found in database." if @flight_plan.acinfo.empty?
-
+    
     # File.delete @aclog_path
   end
 end
@@ -137,5 +137,5 @@ puts "Cruse:     #{@flight_plan.cruise}"
 puts "Squawk:    #{@flight_plan.squawk}"
 puts "Remarks:   #{@flight_plan.remarks}"
 puts ''
-puts "A/C Info:  #{@flight_plan.acinfo}"
+puts "A/C Info:  #{@flight_plan.acinfo.split(' - ').join("\n")}"
 puts '------------------------------------------------------------'
