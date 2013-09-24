@@ -15,12 +15,10 @@ terminal_win    = RAutomation::Window.new title: /\\cmd.exe/
 cmd = vrc_win.text_fields[0]
 selected_aircraft = vrc_win.text_fields[1].value
 
+exit unless selected_aircraft.length > 0
+
 # Store the current text in the command bar.
 prev_cmd = cmd.value
-
-puts selected_aircraft
-
-exit unless selected_aircraft.length > 0
 
 # Retrieve the flight plan.
 cmd.set ".ss #{selected_aircraft}"
