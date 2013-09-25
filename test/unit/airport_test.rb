@@ -41,6 +41,12 @@ describe Airport do
     # Open the browser to Google because the airport may not be listed
     # nationally (AirNav).
     # YVR - Vancouver International Airport
+    
+    # Replace this test with RAISES EXCEPTION.
+    skip
+  end
+  
+  it "raises an exception on airport name lookup failure" do
     skip
   end
   
@@ -49,11 +55,11 @@ describe Airport do
   end
   
   it "can find the true heading between itself and another airport" do
-    skip
+    @airport.true_heading_to('KLAX').must_equal 163.2
   end
     
   it "can find the magnetic heading between itself and another airport" do
-    @airport.true_heading_to('KLAX').must_equal 163.2
+    @airport.magnetic_heading_to(:KLAX).must_equal 146.2
   end
   
   it "caches heading calculations" do
@@ -63,6 +69,12 @@ describe Airport do
   it "launches the web browser on heading lookup failure" do
     # Open the browser to a heading calculator website for
     # manual calculation.
+    
+    # Replace with RAISES EXCEPTION.
+    skip
+  end
+  
+  it "raises an exception on heading lookup failure" do
     skip
   end
   

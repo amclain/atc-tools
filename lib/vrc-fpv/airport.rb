@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Airport
   # Airport's ICAO code.
   attr_accessor :code
@@ -11,7 +13,7 @@ class Airport
   def initialize(**kvargs)
     @code     = kvargs.fetch :code, ''
     @name     = kvargs.fetch :name, ''
-    @variance = kvargs.fetch :variance, 0.0
+    @variance = kvargs.fetch :variance, 17.0 # TODO: Detect this intelligently.
   end
   
   # Discover the airport's full name based
@@ -27,6 +29,13 @@ class Airport
   # Calculate the true heading to the specified airport.
   # Takes an ICAO code or Airport object.
   def true_heading_to(arrival)
+    heading_uri = "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@code.downcase}&airport2=#{arrival.to_s.strip.downcase}"
+    response = Net::HTTP.get URI heading_uri
+    r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
+    
+    raise StandardError unless r.count > 0
+    
+    true_hdg = r.flatten.first.to_f
   end
   
   # Calculate the true heading from the specified airport.
