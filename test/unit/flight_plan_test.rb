@@ -1,6 +1,11 @@
 require 'vrc-fpv/flight_plan'
 require 'test_helper'
 
+#  ------------------------------------------------
+#  Can skip VRC automation tests if the application
+#  isn't running.
+#  ------------------------------------------------
+
 describe FlightPlan do
   
   it "extracts data from the VRC flight plan dialog." do
