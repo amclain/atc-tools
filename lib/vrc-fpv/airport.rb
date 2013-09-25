@@ -8,7 +8,6 @@ class Airport
   
   # Params:
   # :code, :name, :variance
-  # :code is mandatory.
   def initialize(**kvargs)
     @code     = kvargs.fetch :code, ''
     @name     = kvargs.fetch :name, ''
@@ -27,22 +26,22 @@ class Airport
   
   # Calculate the true heading to the specified airport.
   # Takes an ICAO code or Airport object.
-  def true_heading_to_airport(arrival)
+  def true_heading_to(arrival)
   end
   
   # Calculate the true heading from the specified airport.
   # Takes an ICAO code or Airport object.
-  def true_heading_from_airport(departure)
+  def true_heading_from(departure)
   end
   
   # Calculate the magnetic heading to the specified airport.
   # Takes an ICAO code or Airport object.
-  def magnetic_heading_to_airport(arrival)
+  def magnetic_heading_to(arrival)
   end
   
   # Calculate the magnetic heading from the specified airport.
   # Takes an ICAO code or Airport object.
-  def magnetic_heading_from_airport(departure)
+  def magnetic_heading_from(departure)
   end
   
   # Print the Airport ICAO code.
