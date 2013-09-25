@@ -70,4 +70,16 @@ describe Airport do
     skip
   end
   
+  it "can convert true heading to magnetic" do
+    heading = 163.2
+    @airport.variance = 17.0
+    @airport.true_to_magnetic(heading).must_equal 146.2
+  end
+  
+  it "can convert magnetic heading to true" do
+    heading = 146.2
+    @airport.variance = 17.0
+    @airport.magnetic_to_true(heading).must_equal 163.2
+  end
+  
 end
