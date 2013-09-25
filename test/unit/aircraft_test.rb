@@ -1,8 +1,7 @@
+require 'aircraft'
 require 'test_helper'
 
-class AircraftInfo; end
-
-describe AircraftInfo do
+describe Aircraft do
   
   it "can be extracted from VRC." do
     skip

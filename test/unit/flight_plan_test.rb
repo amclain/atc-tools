@@ -1,6 +1,5 @@
+require 'flight_plan'
 require 'test_helper'
-
-class FlightPlan; end
 
 describe FlightPlan do
   

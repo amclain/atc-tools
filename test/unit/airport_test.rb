@@ -1,6 +1,5 @@
+require 'airport'
 require 'test_helper'
-
-class Airport; end
 
 describe Airport do
   
