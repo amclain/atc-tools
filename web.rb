@@ -3,14 +3,20 @@ require 'pry'
 
 # http://skyvector.com/airport/PDX
 # http://www.airnav.com/airport/klax
+# http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=kpdx&airport2=klax
 t1 = Thread.new do
-  uri = URI 'http://www.airnav.com/airport/klax'
-  @response = Net::HTTP.get_response uri
+  uri = URI 'http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=kpdx&airport2=klax'
+  @response = Net::HTTP.get uri
 end
 
 t1.join
 
-@response.body.each_line do |line|
-  l = line.scan %r{(?i:<title>)(.*)(?i:</title>)}
-  puts l.flatten.first if l.count > 0
-end
+r = @response.scan /(?:heading:)\s*([\d\.]+)\s+/
+variation = 16.0
+
+true_hdg = (r.count > 0) ? r.flatten.first.to_f : nil
+mag_hdg = true_hdg - variation
+
+puts "True: #{true_hdg}"
+puts "Mag:  #{mag_hdg}"
+puts "Var:  #{variation}"
