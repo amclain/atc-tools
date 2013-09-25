@@ -32,16 +32,19 @@ class Airport
   # Calculate the true heading from the specified airport.
   # Takes an ICAO code or Airport object.
   def true_heading_from(departure)
+    360.0 - true_heading_to(departure)
   end
   
   # Calculate the magnetic heading to the specified airport.
   # Takes an ICAO code or Airport object.
   def magnetic_heading_to(arrival)
+    true_to_magnetic true_heading_to(arrival)
   end
   
   # Calculate the magnetic heading from the specified airport.
   # Takes an ICAO code or Airport object.
   def magnetic_heading_from(departure)
+    true_to_magnetic true_heading_from(departure)
   end
   
   # Convert a true heading to magnetic based on the airport's
