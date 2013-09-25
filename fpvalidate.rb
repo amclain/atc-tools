@@ -61,9 +61,24 @@ terminal_win.activate
   dest_name:    ''  # Load from AirNav.
 
 
-# Launch web page with airport heading.
+# Calculate airport heading.
 heading_thread = Thread.new do
-  Launchy.open "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@flight_plan.depart.downcase}&airport2=#{@flight_plan.arrive.downcase}"
+  heading_uri = "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@flight_plan.depart.downcase}&airport2=#{@flight_plan.arrive.downcase}"
+  
+  response = Net::HTTP.get(URI heading_uri)
+  r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
+  
+  @variation = 16.0
+  @true_hdg  = 0.0
+  @mag_hdg   = 0.0
+
+  if r.count > 0
+    @true_hdg = r.flatten.first.to_f
+    @mag_hdg = @true_hdg - @variation 
+  else
+    # Launch the browser if the heading can't be parsed out of the web page (error).
+    Launchy.open heading_uri
+  end
 end
 
 # Search for the destination airport name.
@@ -136,6 +151,8 @@ puts "Route:     #{@flight_plan.route}"
 puts "Cruse:     #{@flight_plan.cruise}"
 puts "Squawk:    #{@flight_plan.squawk}"
 puts "Remarks:   #{@flight_plan.remarks}"
+puts ''
+puts "Mag: #{@mag_hdg}      True: #{@true_hdg}"
 puts ''
 puts "A/C Info:  #{@flight_plan.acinfo.split(' - ').join("\n")}"
 puts '------------------------------------------------------------'
