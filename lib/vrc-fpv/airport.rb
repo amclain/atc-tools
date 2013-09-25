@@ -1,5 +1,6 @@
 require 'net/http'
 
+class NameDiscoveryError < StandardError; end
 class HeadingError < StandardError; end
 
 class Airport
@@ -21,6 +22,15 @@ class Airport
   # Discover the airport's full name based
   # on ICAO code.
   def discover_name
+    uri = URI "http://www.airnav.com/airport/#{@code.to_s.downcase}"
+    response = Net::HTTP.get uri
+    
+    l = response.scan %r{(?i:<title>)(?:AirNav:\s*\w*\s*-\s*)?(.*)(?i:</title>)}
+    
+    raise NameDiscoveryError, "Could not discover name for #{@code.to_s.upcase}" \
+      unless l.count > 0
+      
+    @name = l.flatten.first
   end
   
   # Discover the airport's magnetic variance

@@ -25,6 +25,7 @@ describe Airport do
   end
   
   it "can find its name based on ICAO code" do
+    @airport.discover_name
     @airport.name.must_equal 'Portland International Airport'
   end
   
