@@ -1,4 +1,4 @@
-require 'airport'
+require 'vrc-fpv/airport'
 require 'test_helper'
 
 describe Airport do
@@ -52,6 +52,10 @@ describe Airport do
   it "launches the web browser on heading lookup failure" do
     # Open the browser to a heading calculator website for
     # manual calculation.
+    skip
+  end
+  
+  it "prints its ICAO code on to_s" do
     skip
   end
   

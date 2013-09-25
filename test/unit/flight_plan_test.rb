@@ -1,4 +1,4 @@
-require 'flight_plan'
+require 'vrc-fpv/flight_plan'
 require 'test_helper'
 
 describe FlightPlan do
