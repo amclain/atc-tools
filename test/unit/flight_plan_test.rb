@@ -16,4 +16,8 @@ describe FlightPlan do
     skip
   end
   
+  it "can find the name for a VOR" do
+    skip
+  end
+  
 end
