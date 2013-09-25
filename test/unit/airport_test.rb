@@ -75,7 +75,9 @@ describe Airport do
   end
   
   it "raises an exception on heading lookup failure" do
-    skip
+    Proc.new {
+      @airport.true_heading_to('NOEXIST')
+    }.must_raise HeadingError
   end
   
   it "prints its ICAO code on to_s" do

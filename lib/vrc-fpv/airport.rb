@@ -1,5 +1,7 @@
 require 'net/http'
 
+class HeadingError < StandardError; end
+
 class Airport
   # Airport's ICAO code.
   attr_accessor :code
@@ -33,7 +35,8 @@ class Airport
     response = Net::HTTP.get URI heading_uri
     r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
     
-    raise StandardError unless r.count > 0
+    raise HeadingError, "Heading from #{@code.upcase} to @arrival.to_s.upcase not found." \
+      unless r.count > 0
     
     true_hdg = r.flatten.first.to_f
   end
