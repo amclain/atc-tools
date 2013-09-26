@@ -38,7 +38,10 @@ module ATCTools
       
       flight_plan = ATCTools::FlightPlan.new \
         callsign:   @selected_aircraft,
-        aircraft:   ATCTools::Aircraft.new(@flight_plan_win.text_fields[1].value),
+        aircraft:   ATCTools::Aircraft.new(
+                      @flight_plan_win.text_fields[1].value,
+                      info: extract_aircraft_info
+                    ),
         rules:      '',
         depart:     ATCTools::Airport.new(@flight_plan_win.text_fields[2].value),
         arrive:     ATCTools::Airport.new(@flight_plan_win.text_fields[3].value),
@@ -68,11 +71,62 @@ module ATCTools
     # MAKE SURE THE EXTRACTED CALLSIGN IS UP TO DATE BEFORE
     # CALLING THIS METHOD.
     def extract_aircraft_info
-      raise ATCTools::NoAircraftSelectedError, "No aircraft selected." if @selected_aircraft.empty?
+      # --------------------------------------------------------------------------
+      # TODO: Prompt for an aircraft model as the input and use .typeinfo instead.
+      #       This way it can return info for cached aircraft.
+      # --------------------------------------------------------------------------
+      
+      raise ATCTools::NoAircraftSelectedError, "No aircraft selected." \
+        if @selected_aircraft.empty?
       
       # ---------------------------
       # TODO: 
       # ---------------------------
+      
+      # Retrieve the aircraft info.
+      execute_command ".acinfo #{@selected_aircraft}"
+
+      # Dump the aircraft info to a log for processing.
+      execute_command ".log #{File.basename @aclog_path}"
+      
+      # Process aircraft info.
+      aclog = ''
+      result = ''
+      
+      aclog_thread = Thread.new do
+        attempts = 0
+        
+        while attempts < 5
+          aclog_exists = File.exists? @aclog_path
+          break if aclog_exists
+          
+          attempts += 1
+          sleep 0.5
+        end
+        
+        if aclog_exists
+          aclog = File.open(@aclog_path).read
+          
+          # Only keep the last few lines.
+          # Reverse the lines so the latest one is first.
+          aclog = aclog.lines[-6..-1].reverse.join
+          
+          aclog.each_line do |line|
+            result = line.gsub /.*\s*(Aircraft info for \w*:\s*)/, '' if line.include? "Aircraft info for #{@selected_aircraft}"
+            break if result
+          end
+          
+          # ---------------
+          # TODO: Implement
+          # ---------------
+          result = "Aircraft type code '#{''}' not found in database." if result.empty?
+          
+          # File.delete @aclog_path
+        end
+      end
+      
+      aclog_thread.join
+      result
     end
     
     # Extract the text from the command line.

@@ -1,7 +1,7 @@
 module ATCTools
   class Aircraft
     
-    def initialize(actype = nil, **kvargs)
+    def initialize(aircraft_code = nil, **kvargs)
     end
     
   end
