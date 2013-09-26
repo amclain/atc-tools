@@ -21,7 +21,9 @@ Gem::Specification.new do |s|
     'fpv'
   ]
   
-  s.add_development_dependency('rake')
-  s.add_development_dependency('rdoc')
-  s.add_development_dependency('pry')
+  s.add_dependency 'rautomation', '=0.12.0'
+  
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'pry'
 end
