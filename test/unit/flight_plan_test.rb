@@ -61,6 +61,10 @@ describe ATCTools::FlightPlan do
     assert_respond_to @fp, :remarks
   end
   
+  it "has scratchpad" do
+    assert_respond_to @fp, :scratchpad
+  end
+  
   it "can validate cruising altitude based on departure and arrival airport codes" do
     @fp.altitude_valid?.must_equal true
     
@@ -107,6 +111,7 @@ describe ATCTools::FlightPlan do
     data.include?(@fp.squawk.to_s).must_equal true 
     data.include?(@fp.route).must_equal true
     data.include?(@fp.remarks).must_equal true
+    data.include?(@fp.scratchpad).must_equal true
   end
   
 end

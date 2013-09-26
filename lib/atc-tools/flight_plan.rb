@@ -1,3 +1,6 @@
+require 'atc-tools/aircraft'
+require 'atc-tools/airport'
+
 module ATCTools
   class FlightPlan
     # Aircraft callsign.
@@ -20,22 +23,26 @@ module ATCTools
     attr_accessor :route
     # Additional remarks/notes.
     attr_accessor :remarks
+    # Scratch pad.
+    attr_accessor :scratchpad
     
     # Magnetic heading from the departure to arrival airport.
     attr_reader   :heading
     
     def initialize(**kvargs)
-      @callsign  = kvargs.fetch :callsign,  ''
-      @aircraft  = kvargs.fetch :aircraft,  Aircraft.new
-      @rules     = kvargs.fetch :rules,     ''
-      @depart    = kvargs.fetch :depart,    Airport.new
-      @arrive    = kvargs.fetch :arrive,    Airport.new
-      @alternate = kvargs.fetch :alternate, Airport.new
-      @cruise    = kvargs.fetch :cruise,    0
-      @squawk    = kvargs.fetch :squawk,    '0000'
-      @route     = kvargs.fetch :route,     ''
-      @remarks   = kvargs.fetch :remarks,   ''
-      @heading   = nil
+      @callsign   = kvargs.fetch :callsign,  ''
+      @aircraft   = kvargs.fetch :aircraft,  ATCTools::Aircraft.new
+      @rules      = kvargs.fetch :rules,     ''
+      @depart     = kvargs.fetch :depart,    ATCTools::Airport.new
+      @arrive     = kvargs.fetch :arrive,    ATCTools::Airport.new
+      @alternate  = kvargs.fetch :alternate, ATCTools::Airport.new
+      @cruise     = kvargs.fetch :cruise,    0
+      @squawk     = kvargs.fetch :squawk,    '0000'
+      @route      = kvargs.fetch :route,     ''
+      @remarks    = kvargs.fetch :remarks,   ''
+      @scratchpad = kvargs.fetch :scratchpad, ''
+      
+      @heading    = nil
     end
     
     # Validate the cruising altitude given the arrival airport
@@ -66,18 +73,19 @@ module ATCTools
     # Returns a human-readable version of the flight plan.
     def to_s
       data = <<EOS
-Callsign:  #{@callsign}
-A/C Type:  #{@aircraft}
-Rules:     #{@rules}
-Depart:    #{@depart}
-Arrive:    #{@arrive}
-Alternate: #{@alternate}
-Cruise:    #{@cruise}
-Squawk:    #{@squawk}
+Callsign:   #{@callsign}
+A/C Type:   #{@aircraft}
+Rules:      #{@rules}
+Depart:     #{@depart}
+Arrive:     #{@arrive}
+Alternate:  #{@alternate}
+Cruise:     #{@cruise}
+Scratchpad: #{@scratchpad}
+Squawk:     #{@squawk}
 
-Route:     #{@route}
+Route:      #{@route}
 
-Remarks:   #{@remarks}
+Remarks:    #{@remarks}
 EOS
     end
     
