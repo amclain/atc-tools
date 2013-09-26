@@ -1,4 +1,4 @@
-require 'vrc-tools/airport'
+require 'atc-tools/airport'
 require 'test_helper'
 
 describe Airport do

@@ -1,4 +1,4 @@
-require 'vrc-tools/vrc'
+require 'atc-tools/vrc'
 require 'test_helper'
 
 describe VRC do

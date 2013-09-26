@@ -1,7 +1,7 @@
 version = File.read(File.expand_path('../version', __FILE__)).strip
 
 Gem::Specification.new do |s|
-  s.name      = 'vrc-tools'
+  s.name      = 'atc-tools'
   s.version   = version
   s.date      = Time.now.strftime '%Y-%m-%d'
   s.summary   = 'A VATSIM flight plan validator for the VRC radar client.'

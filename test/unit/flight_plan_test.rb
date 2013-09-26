@@ -1,4 +1,4 @@
-require 'vrc-tools/flight_plan'
+require 'atc-tools/flight_plan'
 require 'test_helper'
 
 #  ------------------------------------------------
