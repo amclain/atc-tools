@@ -21,6 +21,9 @@ module ATCTools
     # Additional remarks/notes.
     attr_accessor :remarks
     
+    # Magnetic heading from the departure to arrival airport.
+    attr_reader   :heading
+    
     def initialize(**kvargs)
       @callsign  = kvargs.fetch :callsign,  ''
       @aircraft  = kvargs.fetch :aircraft,  Aircraft.new
@@ -32,11 +35,25 @@ module ATCTools
       @squawk    = kvargs.fetch :squawk,    '0000'
       @route     = kvargs.fetch :route,     ''
       @remarks   = kvargs.fetch :remarks,   ''
+      @heading   = nil
     end
     
-    # Validate the flight level given the arrival airport
+    # Validate the cruising altitude given the arrival airport
     # and flight rules.
-    def flight_level_valid?
+    def altitude_valid?
+      @heading = @depart.magnetic_heading_to @arrival unless @heading
+      
+      rules = @rules.upcase.to_sym
+      case rules
+      when :IFR
+        return true if
+          ((@heading < 180 || @heading >= 360) && @cruise.odd?) ||
+          ((@heading >= 180 && @heading < 360) && @cruise.even?)
+          
+      when :VFR
+      end
+      
+      return false
     end
     
   end

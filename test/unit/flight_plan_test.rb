@@ -61,7 +61,15 @@ describe ATCTools::FlightPlan do
     assert_respond_to @fp, :remarks
   end
   
-  it "can validate flight level based on departure and arrival airport codes" do
+  it "can validate cruising altitude based on departure and arrival airport codes" do
+    @fp.altitude_valid?.must_equal true
+    
+    @fp.cruise = 36000
+    @fp.altitude_valid?.must_equal false
+  end
+  
+  it "can validate VFR altitude" do
+    # Mix these tests into the IFR tests.
     skip
   end
   
