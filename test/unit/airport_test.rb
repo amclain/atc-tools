@@ -82,7 +82,7 @@ describe Airport do
   end
   
   it "prints its ICAO code on to_s" do
-    skip
+    @airport.to_s.must_equal 'KPDX'
   end
   
   it "can convert true heading to magnetic" do
