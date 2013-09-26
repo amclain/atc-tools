@@ -46,7 +46,7 @@ module ATCTools
       response = Net::HTTP.get URI heading_uri
       r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
       
-      raise ATCTools::HeadingError, "Heading from #{@code.upcase} to @arrival.to_s.upcase not found." \
+      raise ATCTools::HeadingError, "Heading from #{@code.upcase} to #{arrival.to_s.upcase} not found." \
         unless r.count > 0
       
       true_hdg = r.flatten.first.to_f
@@ -85,7 +85,7 @@ module ATCTools
     # Print the Airport ICAO code.
     # Allows the object to act as a direct replacement for string input.
     def to_s
-      @code
+      @code.to_s.upcase
     end
     
   end

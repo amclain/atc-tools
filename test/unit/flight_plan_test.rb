@@ -73,6 +73,11 @@ describe ATCTools::FlightPlan do
     skip
   end
   
+  it "can validate IFR altitudes above FL410" do
+    # Mix these tests into the IFR tests.
+    skip
+  end
+  
   it "can validate departure procedures" do
     # This may be a job for a Route class.
     skip
@@ -81,6 +86,27 @@ describe ATCTools::FlightPlan do
   it "can find the name for a VOR" do
     # This may be a job for a Route class.
     skip
+  end
+  
+  it "can be validated" do
+    assert_respond_to @fp, :validate
+    
+    skip
+  end
+  
+  it "to_s returns the flight plan info" do
+    data = @fp.to_s
+    
+    data.include?(@fp.callsign).must_equal true
+    data.include?(@fp.aircraft.to_s).must_equal true
+    data.include?(@fp.rules.to_s.upcase).must_equal true
+    data.include?(@fp.depart.to_s).must_equal true
+    data.include?(@fp.arrive.to_s).must_equal true
+    data.include?(@fp.alternate.to_s).must_equal true
+    data.include?(@fp.cruise.to_s).must_equal true
+    data.include?(@fp.squawk.to_s).must_equal true 
+    data.include?(@fp.route).must_equal true
+    data.include?(@fp.remarks).must_equal true
   end
   
 end

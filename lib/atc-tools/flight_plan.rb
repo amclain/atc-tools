@@ -41,19 +41,44 @@ module ATCTools
     # Validate the cruising altitude given the arrival airport
     # and flight rules.
     def altitude_valid?
-      @heading = @depart.magnetic_heading_to @arrival unless @heading
+      @heading = @depart.magnetic_heading_to @arrive unless @heading
+      
+      # Strip the zeros off of the altitude for even/odd comparison.
+      cruise_stripped = @cruise.to_s.gsub(/0/, '').to_i
       
       rules = @rules.upcase.to_sym
       case rules
       when :IFR
         return true if
-          ((@heading < 180 || @heading >= 360) && @cruise.odd?) ||
-          ((@heading >= 180 && @heading < 360) && @cruise.even?)
+          ((@heading < 180 || @heading >= 360) && cruise_stripped.odd?) ||
+          ((@heading >= 180 && @heading < 360) && cruise_stripped.even?)
           
       when :VFR
       end
       
       return false
+    end
+    
+    # Validate the flight plan.
+    def validate
+    end
+    
+    # Returns a human-readable version of the flight plan.
+    def to_s
+      data = <<EOS
+Callsign:  #{@callsign}
+A/C Type:  #{@aircraft}
+Rules:     #{@rules}
+Depart:    #{@depart}
+Arrive:    #{@arrive}
+Alternate: #{@alternate}
+Cruise:    #{@cruise}
+Squawk:    #{@squawk}
+
+Route:     #{@route}
+
+Remarks:   #{@remarks}
+EOS
     end
     
   end
