@@ -1,11 +1,11 @@
 version = File.read(File.expand_path('../version', __FILE__)).strip
 
 Gem::Specification.new do |s|
-  s.name      = 'vrc-fpv'
+  s.name      = 'vrc-tools'
   s.version   = version
   s.date      = Time.now.strftime '%Y-%m-%d'
   s.summary   = 'A VATSIM flight plan validator for the VRC radar client.'
-  s.description = ""
+  s.description = "A VATSIM flight plan validator for the VRC radar client."
   s.homepage  = ''
   s.authors   = ['Alex McLain']
   s.email     = 'alex@alexmclain.com'

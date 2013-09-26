@@ -1,4 +1,4 @@
-require 'vrc-fpv/airport'
+require 'vrc-tools/airport'
 require 'test_helper'
 
 describe Airport do

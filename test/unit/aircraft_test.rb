@@ -1,4 +1,4 @@
-require 'vrc-fpv/aircraft'
+require 'vrc-tools/aircraft'
 require 'test_helper'
 
 describe Aircraft do
