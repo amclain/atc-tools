@@ -1,10 +1,10 @@
 require 'atc-tools/flight_plan'
 require 'test_helper'
 
-describe FlightPlan do
+describe ATCTools::FlightPlan do
   
   before do
-    @fp = @object = FlightPlan.new
+    @fp = @object = ATCTools::FlightPlan.new
   end
   
   after do

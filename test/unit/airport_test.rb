@@ -1,10 +1,10 @@
 require 'atc-tools/airport'
 require 'test_helper'
 
-describe Airport do
+describe ATCTools::Airport do
   
   before do
-    @airport = @object = Airport.new code: 'KPDX'
+    @airport = @object = ATCTools::Airport.new code: 'KPDX'
   end
   
   after do
@@ -78,7 +78,7 @@ describe Airport do
   it "raises an exception on heading lookup failure" do
     Proc.new {
       @airport.true_heading_to('NOEXIST')
-    }.must_raise HeadingError
+    }.must_raise ATCTools::HeadingError
   end
   
   it "prints its ICAO code on to_s" do

@@ -1,7 +1,7 @@
 require 'atc-tools/vrc'
 require 'test_helper'
 
-describe VRC do
+describe ATCTools::VRC do
   
   it "extracts data from the flight plan window" do
     skip unless $RUN_VRC_TESTS

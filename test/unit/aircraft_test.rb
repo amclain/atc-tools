@@ -1,7 +1,7 @@
 require 'atc-tools/aircraft'
 require 'test_helper'
 
-describe Aircraft do
+describe ATCTools::Aircraft do
   
   it "can be extracted from VRC." do
     skip
