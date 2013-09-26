@@ -29,9 +29,14 @@ module ATCTools
       @arrive    = kvargs.fetch :arrive,    Airport.new
       @alternate = kvargs.fetch :alternate, Airport.new
       @cruise    = kvargs.fetch :cruise,    0
-      @squawk    = kvargs.fetch :squawk,    0
+      @squawk    = kvargs.fetch :squawk,    '0000'
       @route     = kvargs.fetch :route,     ''
       @remarks   = kvargs.fetch :remarks,   ''
+    end
+    
+    # Validate the flight level given the arrival airport
+    # and flight rules.
+    def flight_level_valid?
     end
     
   end

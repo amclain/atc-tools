@@ -4,7 +4,17 @@ require 'test_helper'
 describe ATCTools::FlightPlan do
   
   before do
-    @fp = @object = ATCTools::FlightPlan.new
+    @fp = @object = ATCTools::FlightPlan.new \
+      callsign:  'QXE1234',
+      aircraft:  ATCTools::Aircraft.new,
+      rules:     :IFR,
+      depart:    ATCTools::Airport.new('KPDX'),
+      arrive:    ATCTools::Airport.new(:KLAX),
+      alternate: ATCTools::Airport.new(:KSFO),
+      cruise:    35000,
+      squawk:    '0000',
+      route:     'JOGEN Q7 AVE SADDE6',
+      remarks:   '/v/'
   end
   
   after do

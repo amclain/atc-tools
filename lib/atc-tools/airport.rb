@@ -14,8 +14,8 @@ module ATCTools
     
     # Params:
     # :code, :name, :variance
-    def initialize(**kvargs)
-      @code     = kvargs.fetch :code, ''
+    def initialize(code = nil, **kvargs)
+      @code     = code || (kvargs.fetch :code, '')
       @name     = kvargs.fetch :name, ''
       @variance = kvargs.fetch :variance, 17.0 # TODO: Detect this intelligently.
     end
