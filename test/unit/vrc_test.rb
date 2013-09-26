@@ -5,7 +5,6 @@ describe ATCTools::VRC do
   
   it "extracts data from the flight plan window" do
     skip unless $RUN_VRC_TESTS
-    assert true
   end
   
   it "extracts the selected aircraft callsign" do
@@ -13,6 +12,10 @@ describe ATCTools::VRC do
   end
   
   it "can check if an aircraft is currently selected" do
+    skip unless $RUN_VRC_TESTS
+  end
+  
+  it "extracts aircraft info" do
     skip unless $RUN_VRC_TESTS
   end
   
