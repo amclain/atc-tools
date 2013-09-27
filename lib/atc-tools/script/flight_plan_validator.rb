@@ -44,16 +44,21 @@ module ATCTools
       heading_thread.join
       airport_name_thread.join
       
-      puts '------------------------------------------------------------'
-      puts vrc.flight_plan_title
-      puts ''
-      puts @flight_plan
-      puts ''
-      puts "Heading:    #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
-      puts "Valid?      #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
-      puts ''
-      puts @flight_plan.aircraft.info.split(' - ').join("\n")
-      puts '------------------------------------------------------------'
+      output = []
+      
+      output << '------------------------------------------------------------'
+      output << vrc.flight_plan_title
+      output << ''
+      output << @flight_plan.to_s.split("\n")
+      output << ''
+      output << "Valid?      #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
+      output << "Heading:    #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
+      output << ''
+      output << @flight_plan.aircraft.info.split(' - ').join("\n")
+      output << '------------------------------------------------------------'
+      
+      puts text = output.join("\n")
+      text
     end
     
   end
