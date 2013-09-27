@@ -1,0 +1,2 @@
+require 'atc-tools/script/flight_plan_validator'
+puts ATCTools::FlightPlanValidator.run

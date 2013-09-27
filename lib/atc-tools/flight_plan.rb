@@ -85,11 +85,11 @@ Depart:     #{@depart}
 Arrive:     #{@arrive} :: #{@arrive.name}
 Alternate:  #{@alternate}
 
+Route:      #{@route}
+
 Cruise:     #{@cruise}
 Scratchpad: #{@scratchpad}
 Squawk:     #{@squawk}
-
-Route:      #{@route}
 
 Remarks:    #{@remarks}
 EOS

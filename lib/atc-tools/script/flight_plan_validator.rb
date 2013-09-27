@@ -19,8 +19,7 @@ module ATCTools
       begin
         @flight_plan = vrc.selected_flight_plan!
       rescue ATCTools::NoAircraftSelectedError
-        puts 'No aircraft selected.'
-        return
+        return 'No aircraft selected.'
       end
       
       vrc.activate_terminal_window!
@@ -51,14 +50,14 @@ module ATCTools
       output << ''
       output << @flight_plan.to_s.split("\n")
       output << ''
-      output << "Valid?      #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
+      output << ''
+      output << "Alt Valid?  #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
       output << "Heading:    #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
       output << ''
-      output << @flight_plan.aircraft.info.split(' - ').join("\n")
+      output << @flight_plan.aircraft.info.split(' - ').join("\n").strip
       output << '------------------------------------------------------------'
       
-      puts text = output.join("\n")
-      text
+      text = output.join("\n")
     end
     
   end
