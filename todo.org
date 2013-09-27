@@ -3,11 +3,11 @@
   Components
   ----------
   * Flight Plan Data (VRC)
-      [ ] Extract from VRC.
+      [X] Extract from VRC.
       [ ] Include flight rules.
   
   * Aircraft Info (VRC)
-      [ ] Extract from VRC.
+      [X] Extract from VRC.
       [ ] Equipment validation (web?).
       [ ] Caches aircraft info.
       [ ] Can parse "A/C Type" field and search cache before pulling data from VRC.
@@ -17,15 +17,15 @@
       [ ] Caches the variance value.
   
   * Arrival Airport Name (Web)
-      [ ] Parses arrival airport name from web.
-      [ ] Launches web page in browser on parser failure.
+      [X] Parses arrival airport name from web.
+      [X] Launches web page in browser on parser failure.
       [ ] Caches airport names.
   
   * Airport Heading (Web)
-      [ ] Parses heading from web page.
-      [ ] Launches web page in browser on parser failure.
-      [ ] Calculates magnetic variance.
-      [ ] Flight level validation.
+      [X] Parses heading from web page.
+      [X] Launches web page in browser on parser failure.
+      [X] Calculates magnetic variance.
+      [X] Flight level validation.
       [ ] Caches data.
   
   * Route
