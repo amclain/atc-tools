@@ -7,6 +7,9 @@ module ATCTools
   
   # A class for interfacing with the Virtual Radar Client application.
   # http://www1.metacraft.com/VRC/
+  #
+  # Methods with a bang (!) at the end manipulate the window and
+  # could affect the user.
   class VRC
     # VRC log path for exporting aircraft info.
     attr_accessor :aclog_path
@@ -27,12 +30,9 @@ module ATCTools
     end
     
     # Extracts the flight plan of the selected aircraft.
-    #
-    # MAKE SURE THE EXTRACTED CALLSIGN IS UP TO DATE BEFORE
-    # CALLING THIS METHOD.
-    def extract_flight_plan
+    def selected_flight_plan!
       raise ATCTools::NoAircraftSelectedError, "No aircraft selected." \
-        if @selected_aircraft.empty?
+        unless aircraft_selected?
       
       execute_command ".ss #{@selected_aircraft}"
       
@@ -40,9 +40,9 @@ module ATCTools
         callsign:   @selected_aircraft,
         aircraft:   ATCTools::Aircraft.new(
                       @flight_plan_win.text_fields[1].value,
-                      info: extract_aircraft_info
+                      info: selected_aircraft_info!
                     ),
-        rules:      '',
+        rules:      :IFR, # TODO: Implement #########################################
         depart:     ATCTools::Airport.new(@flight_plan_win.text_fields[2].value),
         arrive:     ATCTools::Airport.new(@flight_plan_win.text_fields[3].value),
         alternate:  ATCTools::Airport.new(@flight_plan_win.text_fields[4].value),
@@ -55,29 +55,26 @@ module ATCTools
     
     # Extracts the callsign of the selected aircraft.
     # Returns an empty string if no aircraft is selected.
-    def extract_selected_aircraft
+    def selected_aircraft
       @selected_aircraft = @callsign_win.value.strip
     end
     
     # True if an aircraft is selected.
     def aircraft_selected?
-      selection_empty = extract_selected_aircraft.empty?
+      selection_empty = selected_aircraft.empty?
       @selected_aircraft = '' if selection_empty
       not selection_empty
     end
     
     # Extracts the aircraft info for the selected aircraft.
-    #
-    # MAKE SURE THE EXTRACTED CALLSIGN IS UP TO DATE BEFORE
-    # CALLING THIS METHOD.
-    def extract_aircraft_info
+    def selected_aircraft_info!
       # --------------------------------------------------------------------------
       # TODO: Prompt for an aircraft model as the input and use .typeinfo instead.
       #       This way it can return info for cached aircraft.
       # --------------------------------------------------------------------------
       
       raise ATCTools::NoAircraftSelectedError, "No aircraft selected." \
-        if @selected_aircraft.empty?
+        unless aircraft_selected?
       
       # ---------------------------
       # TODO: 
@@ -117,7 +114,7 @@ module ATCTools
         # ---------------
         # TODO: Implement
         # ---------------
-        result = "Aircraft type code '#{''}' not found in database." if result.empty?
+        result = "Aircraft type code '#{'xxx'}' not found in database." if result.empty?
         
         # File.delete @aclog_path
       end
@@ -126,14 +123,14 @@ module ATCTools
     end
     
     # Extract the text from the command line.
-    def extract_command
+    def command_line
       @command_win.value
     end
     
     # Execute a command in the VRC client.
     # Preserves partially-entered commands in the text box.
     def execute_command(cmd)
-      old_cmd = extract_command
+      old_cmd = command_line
       execute_command! cmd
       @command_win.set old_cmd
     end
@@ -146,13 +143,13 @@ module ATCTools
     end
     
     # Activate the VRC window, bringing it to the foreground.
-    def activate_vrc_window
+    def activate_vrc_window!
       @vrc_win.activate
     end
     
     # Activate the terminal (command line) window, bringing
     # it to the foreground.
-    def activate_terminal_window
+    def activate_terminal_window!
       @terminal_win.activate
     end
     
