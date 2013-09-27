@@ -92,40 +92,36 @@ module ATCTools
       # Process aircraft info.
       aclog = ''
       result = ''
+      attempts = 0
       
-      aclog_thread = Thread.new do
-        attempts = 0
+      while attempts < 5
+        aclog_exists = File.exists? @aclog_path
+        break if aclog_exists
         
-        while attempts < 5
-          aclog_exists = File.exists? @aclog_path
-          break if aclog_exists
-          
-          attempts += 1
-          sleep 0.5
-        end
-        
-        if aclog_exists
-          aclog = File.open(@aclog_path).read
-          
-          # Only keep the last few lines.
-          # Reverse the lines so the latest one is first.
-          aclog = aclog.lines[-6..-1].reverse.join
-          
-          aclog.each_line do |line|
-            result = line.gsub /.*\s*(Aircraft info for \w*:\s*)/, '' if line.include? "Aircraft info for #{@selected_aircraft}"
-            break if result
-          end
-          
-          # ---------------
-          # TODO: Implement
-          # ---------------
-          result = "Aircraft type code '#{''}' not found in database." if result.empty?
-          
-          # File.delete @aclog_path
-        end
+        attempts += 1
+        sleep 0.5
       end
       
-      aclog_thread.join
+      if aclog_exists
+        aclog = File.open(@aclog_path).read
+        
+        # Only keep the last few lines.
+        # Reverse the lines so the latest one is first.
+        aclog = aclog.lines[-6..-1].reverse.join
+        
+        aclog.each_line do |line|
+          result = line.gsub /.*\s*(Aircraft info for \w*:\s*)/, '' if line.include? "Aircraft info for #{@selected_aircraft}"
+          break if result
+        end
+        
+        # ---------------
+        # TODO: Implement
+        # ---------------
+        result = "Aircraft type code '#{''}' not found in database." if result.empty?
+        
+        # File.delete @aclog_path
+      end
+      
       result
     end
     
