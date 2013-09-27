@@ -78,7 +78,7 @@ describe ATCTools::Airport do
   it "raises an exception on heading lookup failure" do
     Proc.new {
       @airport.true_heading_to('NOEXIST')
-    }.must_raise ATCTools::HeadingError
+    }.must_raise ATCTools::HeadingDiscoveryError
   end
   
   it "prints its ICAO code on to_s" do

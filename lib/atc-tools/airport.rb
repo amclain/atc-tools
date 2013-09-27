@@ -2,15 +2,18 @@ require 'net/http'
 
 module ATCTools
   class NameDiscoveryError < StandardError; end
-  class HeadingError < StandardError; end
+  class HeadingDiscoveryError < StandardError; end
 
   class Airport
     # Airport's ICAO code.
     attr_accessor :code
     # Airport's full name.
-    attr_accessor :name
+    attr_writer   :name
     # Airport's magnetic variance from true north.
     attr_accessor :variance
+    
+    attr_reader   :name_uri
+    attr_reader   :heading_uri
     
     # Params:
     # :code, :name, :variance
@@ -20,11 +23,17 @@ module ATCTools
       @variance = kvargs.fetch :variance, 17.0 # TODO: Detect this intelligently.
     end
     
+    # Airport's full name.
+    def name
+      discover_name if @name.empty?
+      @name
+    end
+    
     # Discover the airport's full name based
     # on ICAO code.
     def discover_name
-      uri = URI "http://www.airnav.com/airport/#{@code.to_s.downcase}"
-      response = Net::HTTP.get uri
+      @name_uri = "http://www.airnav.com/airport/#{@code.to_s.downcase}"
+      response = Net::HTTP.get URI name_uri
       
       l = response.scan %r{(?i:<title>)(?:AirNav:\s*\w*\s*-\s*)?(.*)(?i:</title>)}
       
@@ -42,11 +51,11 @@ module ATCTools
     # Calculate the true heading to the specified airport.
     # Takes an ICAO code or Airport object.
     def true_heading_to(arrival)
-      heading_uri = "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@code.downcase}&airport2=#{arrival.to_s.strip.downcase}"
+      @heading_uri = "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@code.downcase}&airport2=#{arrival.to_s.strip.downcase}"
       response = Net::HTTP.get URI heading_uri
       r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
       
-      raise ATCTools::HeadingError, "Heading from #{@code.upcase} to #{arrival.to_s.upcase} not found." \
+      raise ATCTools::HeadingDiscoveryError, "Heading from #{@code.upcase} to #{arrival.to_s.upcase} not found." \
         unless r.count > 0
       
       true_hdg = r.flatten.first.to_f

@@ -26,8 +26,6 @@ module ATCTools
     # Scratch pad.
     attr_accessor :scratchpad
     
-    # Magnetic heading from the departure to arrival airport.
-    attr_reader   :heading
     
     def initialize(**kvargs)
       @callsign   = kvargs.fetch :callsign,  ''
@@ -43,6 +41,12 @@ module ATCTools
       @scratchpad = kvargs.fetch :scratchpad, ''
       
       @heading    = nil
+    end
+    
+    # Magnetic heading from the departure to arrival airport.
+    def heading
+      altitude_valid? unless @heading # Run the validator to populate @heading.
+      @heading
     end
     
     # Validate the cruising altitude given the arrival airport
@@ -77,7 +81,7 @@ Callsign:   #{@callsign}
 A/C Type:   #{@aircraft}
 Rules:      #{@rules}
 Depart:     #{@depart}
-Arrive:     #{@arrive}
+Arrive:     #{@arrive} :: #{@arrive.name}
 Alternate:  #{@alternate}
 Cruise:     #{@cruise}
 Scratchpad: #{@scratchpad}

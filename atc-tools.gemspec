@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   ]
   
   s.add_dependency 'rautomation', '=0.12.0'
+  s.add_dependency 'launchy',     '=2.3.0'
   
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rdoc'
