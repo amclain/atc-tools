@@ -23,6 +23,8 @@ module ATCTools
         return
       end
       
+      vrc.activate_terminal_window!
+      
       heading_thread = Thread.new do
         begin
           @flight_plan.heading
@@ -42,14 +44,15 @@ module ATCTools
       heading_thread.join
       airport_name_thread.join
       
-      vrc.activate_terminal_window!
-      
       puts '------------------------------------------------------------'
+      puts vrc.flight_plan_title
+      puts ''
       puts @flight_plan
       puts ''
-      puts "Heading: #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
+      puts "Heading:    #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
+      puts "Valid?      #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
       puts ''
-      puts @flight_plan.aircraft.info
+      puts @flight_plan.aircraft.info.split(' - ').join("\n")
       puts '------------------------------------------------------------'
     end
     

@@ -80,9 +80,11 @@ module ATCTools
 Callsign:   #{@callsign}
 A/C Type:   #{@aircraft}
 Rules:      #{@rules}
+
 Depart:     #{@depart}
 Arrive:     #{@arrive} :: #{@arrive.name}
 Alternate:  #{@alternate}
+
 Cruise:     #{@cruise}
 Scratchpad: #{@scratchpad}
 Squawk:     #{@squawk}

@@ -29,6 +29,10 @@ module ATCTools
       @callsign_win    = @vrc_win.text_fields[1]
     end
     
+    def flight_plan_title
+      @flight_plan_win.title
+    end
+    
     # Extracts the flight plan of the selected aircraft.
     def selected_flight_plan!
       raise ATCTools::NoAircraftSelectedError, "No aircraft selected." \
