@@ -72,6 +72,18 @@ describe ATCTools::FlightPlan do
     @fp.altitude_valid?.must_equal false
     
     # Altitudes above FL410
+  end
+  
+  it "can validate IFR west-bound altitudes above FL410" do
+    @fp.arrive = ATCTools::Airport.new(:KCLM)
+    @fp.cruise = 42000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 43000
+    @fp.altitude_valid?.must_equal true
+  end
+  
+  it "can validate IFR altitudes above FL410" do
     @fp.cruise = 41000
     @fp.altitude_valid?.must_equal true
     
@@ -91,26 +103,11 @@ describe ATCTools::FlightPlan do
     @fp.altitude_valid?.must_equal false
   end
   
-  it "can validate IFR west-bound altitudes above FL410" do
-    @fp.arrive = ATCTools::Airport.new(:KCLM)
-    @fp.cruise = 42000
-    @fp.altitude_valid?.must_equal false
-    
-    @fp.cruise = 43000
-    @fp.altitude_valid?.must_equal true
+  it "warns about barometer for FL180, FL190, FL200" do
+    skip
   end
   
   it "can validate VFR cruising altitude" do
-    skip
-  end
-  
-  it "can validate VFR altitude" do
-    # Mix these tests into the IFR tests.
-    skip
-  end
-  
-  it "can validate IFR altitudes above FL410" do
-    # Mix these tests into the IFR tests.
     skip
   end
   
