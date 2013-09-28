@@ -13,7 +13,9 @@ module ATCTools
     # Aircraft equipment code.
     attr_reader   :equipment
     
-    
+    # Params:
+    #   :info, :model, :code, :equipment
+    #   -- See instance variables for descriptions.
     def initialize(aircraft_code = nil, **kvargs)
       @raw       = aircraft_code || kvargs.fetch(:code, '')
       @info      = kvargs.fetch :info, ''

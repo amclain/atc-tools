@@ -14,6 +14,8 @@ module ATCTools
     # VRC log path for exporting aircraft info.
     attr_accessor :aclog_path
     
+    # Params:
+    #   :aclog_path - Location of the VRC log dump for the aircraft info query.
     def initialize(**kvargs)
       @aclog_path = kvargs.fetch :aclog_path, File.expand_path('Documents/VRC/acinfo.txt', '~')
       
@@ -28,6 +30,8 @@ module ATCTools
       @callsign_win    = @vrc_win.text_fields[1]
     end
     
+    # Title of the VRC flight plan window.
+    # This includes the pilot's callsign and real name.
     def flight_plan_title
       @flight_plan_win.title
     end

@@ -7,6 +7,7 @@ module ATCTools
   class FlightPlanValidator
     private_class_method :new
     
+    # The last flight plan returned.
     def self.flight_plan
       @flight_plan
     end

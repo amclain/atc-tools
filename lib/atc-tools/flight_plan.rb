@@ -26,7 +26,10 @@ module ATCTools
     # Scratch pad.
     attr_accessor :scratchpad
     
-    
+    # Params:
+    #   :callsign, :aircraft, :rules, :depart, :arrive, :alternate, :cruse,
+    #   :squawk, :route, :remarks, :scratchpad
+    #   -- See instance variables for descriptions.
     def initialize(**kvargs)
       @callsign   = kvargs.fetch :callsign,  ''
       @aircraft   = kvargs.fetch :aircraft,  ATCTools::Aircraft.new
