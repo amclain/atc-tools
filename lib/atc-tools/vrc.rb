@@ -46,7 +46,8 @@ module ATCTools
                       @flight_plan_win.text_fields[1].value,
                       info: selected_aircraft_info!
                     ),
-        rules:      :IFR, # TODO: Implement #########################################
+        rules:      (RAutomation::Adapter::Win32::SelectList.new @flight_plan_win, index: 0)
+                      .value.upcase.to_sym,
         depart:     ATCTools::Airport.new(@flight_plan_win.text_fields[2].value),
         arrive:     ATCTools::Airport.new(@flight_plan_win.text_fields[3].value),
         alternate:  ATCTools::Airport.new(@flight_plan_win.text_fields[4].value),
