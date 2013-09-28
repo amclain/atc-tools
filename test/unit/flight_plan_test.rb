@@ -65,11 +65,41 @@ describe ATCTools::FlightPlan do
     assert_respond_to @fp, :scratchpad
   end
   
-  it "can validate cruising altitude based on departure and arrival airport codes" do
+  it "can validate IFR cruising altitude based on departure and arrival airport codes" do
     @fp.altitude_valid?.must_equal true
     
     @fp.cruise = 36000
     @fp.altitude_valid?.must_equal false
+    
+    # Altitudes above FL410
+    @fp.cruise = 41000
+    @fp.altitude_valid?.must_equal true
+    
+    @fp.cruise = 49000
+    @fp.altitude_valid?.must_equal true
+    
+    @fp.cruise = 61000
+    @fp.altitude_valid?.must_equal true
+    
+    @fp.cruise = 43000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 51000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 59000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.arrive = ATCTools::Airport.new(:KCLM)
+    @fp.cruise = 42000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 43000
+    @fp.altitude_valid?.must_equal true
+  end
+  
+  it "can validate VFR cruising altitude" do
+    skip
   end
   
   it "can validate VFR altitude" do
