@@ -52,22 +52,39 @@ module ATCTools
     # Validate the cruising altitude given the arrival airport
     # and flight rules.
     def altitude_valid?
+      # TODO: This can cause a bug if the destination airport is changed
+      #       after the heading is calculated. Although a new FlightPlan
+      #       object should be created in this case, the problem should
+      #       still be fixed.
       @heading = @depart.magnetic_heading_to @arrive unless @heading
       
       # Strip the zeros off of the altitude for even/odd comparison.
       cruise_stripped = @cruise.to_s.gsub(/0/, '').to_i
+      is_north_east = (@heading < 180 || @heading >= 360)
       
       rules = @rules.upcase.to_sym
       case rules
       when :IFR
-        return true if
-          ((@heading < 180 || @heading >= 360) && cruise_stripped.odd?) ||
-          ((@heading >= 180 && @heading < 360) && cruise_stripped.even?)
+        above_fl410 = cruise_stripped > 41
+        
+        if above_fl410
+          east_alt = [45, 49, 53, 57, 61]
+          west_alt = [43, 47, 51, 55, 59]
+          
+          east_valid = (is_north_east && east_alt.include?(cruise_stripped))
+          west_valid = ((not is_north_east) && west_alt.include?(cruise_stripped))
+          
+          return true if east_valid || west_valid
+        else
+          return true if
+            (is_north_east && cruise_stripped.odd?) ||
+            ((not is_north_east) && cruise_stripped.even?)
+        end
           
       when :VFR
       end
       
-      return false
+      false
     end
     
     # Validate the flight plan.

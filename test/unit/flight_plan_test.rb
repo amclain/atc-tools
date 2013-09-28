@@ -89,7 +89,9 @@ describe ATCTools::FlightPlan do
     
     @fp.cruise = 59000
     @fp.altitude_valid?.must_equal false
-    
+  end
+  
+  it "can validate IFR west-bound altitudes above FL410" do
     @fp.arrive = ATCTools::Airport.new(:KCLM)
     @fp.cruise = 42000
     @fp.altitude_valid?.must_equal false
