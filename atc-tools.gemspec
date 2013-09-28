@@ -5,8 +5,11 @@ Gem::Specification.new do |s|
   s.version   = version
   s.date      = Time.now.strftime '%Y-%m-%d'
   s.summary   = 'A VATSIM flight plan validator for the VRC radar client.'
-  s.description = "A VATSIM flight plan validator for the VRC radar client."
-  s.homepage  = ''
+  s.description = 
+  "A VATSIM flight plan validator for the VRC radar client.
+  NOTE: Only works with 32-bit Ruby installations due to the RAutomation gem."
+  
+  s.homepage  = 'https://bitbucket.org/amclain/atc-tools'
   s.authors   = ['Alex McLain']
   s.email     = 'alex@alexmclain.com'
   s.license   = 'MIT'
