@@ -37,10 +37,13 @@ module ATCTools
       @name_uri = "http://www.airnav.com/airport/#{@code.to_s.downcase}"
       response = Net::HTTP.get URI name_uri
       
-      l = response.scan %r{(?i:<title>)(?:AirNav:\s*\w*\s*-\s*)?(.*)(?i:</title>)}
+      l = response.scan %r{(?i:<title>)(?:AirNav:\s*\w*\s*-\s*)(.*)(?i:</title>)}
       
-      raise ATCTools::NameDiscoveryError, "Could not discover name for #{@code.to_s.upcase}" \
-        unless l.count > 0
+      unless l.flatten.count > 0
+        @name = ' '
+        raise ATCTools::NameDiscoveryError, "Could not discover name for #{@code.to_s.upcase}"
+      end
+        
         
       @name = l.flatten.first
     end

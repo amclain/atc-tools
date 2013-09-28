@@ -41,10 +41,11 @@ describe ATCTools::Airport do
   it "launches the web browser on arrival airport name lookup failure" do
     # Open the browser to Google because the airport may not be listed
     # nationally (AirNav).
-    # YVR - Vancouver International Airport
-    
-    # Replace this test with RAISES EXCEPTION.
-    skip
+    # CYVR - Vancouver International Airport
+    Proc.new {
+      @airport = ATCTools::Airport.new code: :CYVR
+      @airport.discover_name
+    }.must_raise ATCTools::NameDiscoveryError
   end
   
   it "raises an exception on airport name lookup failure" do

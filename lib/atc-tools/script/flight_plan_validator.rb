@@ -37,7 +37,7 @@ module ATCTools
         begin
           @flight_plan.arrive.name
         rescue ATCTools::NameDiscoveryError
-          Launchy.open "https://www.google.com/#q=#{@flight_plan.arrive.upcase}+airport"
+          Launchy.open "https://www.google.com/#q=#{@flight_plan.arrive.code.to_s.upcase}+airport"
         end
       end
       
@@ -53,7 +53,7 @@ module ATCTools
       output << ''
       output << ''
       output << "Alt Valid?  #{(@flight_plan.altitude_valid?) ? 'Yes' : '-NO-'}"
-      output << "Heading:    #{@flight_plan.heading} mag :: #{@flight_plan.depart.magnetic_to_true @flight_plan.heading} true"
+      output << "Heading:    #{@flight_plan.heading.round(2)} mag :: #{@flight_plan.depart.magnetic_to_true(@flight_plan.heading).round(2)} true"
       output << ''
       output << @flight_plan.aircraft.info.split(' - ').join("\n").strip
       output << '------------------------------------------------------------'
