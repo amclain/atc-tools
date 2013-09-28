@@ -13,7 +13,6 @@ module ATCTools
   class VRC
     # VRC log path for exporting aircraft info.
     attr_accessor :aclog_path
-    attr_reader   :selected_aircraft
     
     def initialize(**kvargs)
       @aclog_path = kvargs.fetch :aclog_path, File.expand_path('Documents/VRC/acinfo.txt', '~')

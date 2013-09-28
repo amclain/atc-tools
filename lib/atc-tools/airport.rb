@@ -12,7 +12,9 @@ module ATCTools
     # Airport's magnetic variance from true north.
     attr_accessor :variance
     
+    # URI of the web page used for the last airport name lookup.
     attr_reader   :name_uri
+    # URI of the web page used for the last heading lookup.
     attr_reader   :heading_uri
     
     # Params:
