@@ -38,18 +38,14 @@ describe ATCTools::Airport do
     skip
   end
   
-  it "launches the web browser on arrival airport name lookup failure" do
-    # Open the browser to Google because the airport may not be listed
-    # nationally (AirNav).
+  it "raises an exception on airport name lookup failure" do
+    # Raise an exception that can be used to open the browser to a search
+    # engine because the airport may not be listed nationally (AirNav).
     # CYVR - Vancouver International Airport
     Proc.new {
       @airport = ATCTools::Airport.new code: :CYVR
       @airport.discover_name
     }.must_raise ATCTools::NameDiscoveryError
-  end
-  
-  it "raises an exception on airport name lookup failure" do
-    skip
   end
   
   it "caches airport names" do
@@ -65,14 +61,6 @@ describe ATCTools::Airport do
   end
   
   it "caches heading calculations" do
-    skip
-  end
-  
-  it "launches the web browser on heading lookup failure" do
-    # Open the browser to a heading calculator website for
-    # manual calculation.
-    
-    # Replace with RAISES EXCEPTION.
     skip
   end
   
