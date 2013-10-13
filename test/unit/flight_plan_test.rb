@@ -103,6 +103,23 @@ describe ATCTools::FlightPlan do
     @fp.altitude_valid?.must_equal false
   end
   
+  # Added due to bug.
+  it "reports FL500 as invalid" do
+    @fp = @object = ATCTools::FlightPlan.new \
+      callsign:  'QXE1234',
+      aircraft:  ATCTools::Aircraft.new,
+      rules:     :IFR,
+      depart:    ATCTools::Airport.new(:KPDX),
+      arrive:    ATCTools::Airport.new(:KSEA),
+      alternate: ATCTools::Airport.new,
+      cruise:    50000,
+      squawk:    '0000',
+      route:     'DCT SEA',
+      remarks:   '/v/'
+      
+    @fp.altitude_valid?.must_equal false
+  end
+  
   it "warns about barometer for FL180, FL190, FL200" do
     skip
   end
