@@ -22,7 +22,7 @@ module ATCTools
     def initialize(code = nil, **kvargs)
       @code     = code || (kvargs.fetch :code, '')
       @name     = kvargs.fetch :name, ''
-      @variance = kvargs.fetch :variance, 17.0 # TODO: Detect this intelligently.
+      @variance = kvargs.fetch :variance, 20.0 # ZSE Standard Variance
     end
     
     # Airport's full name.
