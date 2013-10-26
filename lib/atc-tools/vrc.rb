@@ -122,7 +122,7 @@ module ATCTools
         # ---------------
         # TODO: Implement
         # ---------------
-        result = "Aircraft type code '#{'xxx'}' not found in database." if result.empty?
+        result = "Aircraft type code not found in database." if result.empty?
         
         # File.delete @aclog_path
       end
