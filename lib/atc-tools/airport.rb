@@ -56,9 +56,9 @@ module ATCTools
     # Calculate the true heading to the specified airport.
     # Takes an ICAO code or Airport object.
     def true_heading_to(arrival)
-      @heading_uri = "http://www6.landings.com/cgi-bin/nph-dist_apt?airport1=#{@code.downcase}&airport2=#{arrival.to_s.strip.downcase}"
+      @heading_uri = "http://www.aeroplanner.com/calculators/avcalcdist.cfm?typ1=APT&Txt1=#{@code.downcase}&typ2=APT&Txt2=#{arrival.to_s.strip.downcase}&londir1=East&lond=&londir2=East&londd=&lonmm=&lonss=&calculate=Calculate"
       response = Net::HTTP.get URI heading_uri
-      r = response.scan /(?:heading:)\s*([\d\.]+)\s+/
+      r = response.scan /(?i:<b>\s*initial course:\s*<\/b>)\s*\b([\d\.]+)\b/
       
       raise ATCTools::HeadingDiscoveryError, "Heading from #{@code.upcase} to #{arrival.to_s.upcase} not found." \
         unless r.count > 0

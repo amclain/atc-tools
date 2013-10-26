@@ -30,8 +30,8 @@ describe ATCTools::Airport do
   end
   
   it "can find its magnetic variance based on ICAO code" do
-    # 17 degrees E as of 2013.
-    @airport.variance.must_equal 17.0
+    # 20 degrees E as of 2013. SEAARTCC SOP
+    @airport.variance.must_equal 20.0
   end
   
   it "caches the variance value" do
@@ -53,11 +53,11 @@ describe ATCTools::Airport do
   end
   
   it "can find the true heading between itself and another airport" do
-    @airport.true_heading_to('KLAX').must_equal 163.2
+    @airport.true_heading_to('KLAX').must_be_close_to 163.2, 0.3
   end
     
   it "can find the magnetic heading between itself and another airport" do
-    @airport.magnetic_heading_to(:KLAX).must_equal 146.2
+    @airport.magnetic_heading_to(:KLAX).must_be_close_to 163.2 - @airport.variance, 0.3
   end
   
   it "caches heading calculations" do
