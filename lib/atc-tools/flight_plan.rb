@@ -68,7 +68,7 @@ module ATCTools
       rules = @rules.upcase.to_sym
       case rules
       when :IFR
-        above_fl410 = cruise_stripped > 41
+        above_fl410 = @cruise.to_i / 100 > 410
         
         if above_fl410
           east_alt = [45, 49, 53, 57, 61]

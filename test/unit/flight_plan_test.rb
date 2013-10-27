@@ -170,4 +170,22 @@ describe ATCTools::FlightPlan do
     data.include?(@fp.scratchpad).must_equal true
   end
   
+  it "can accept a standard cruising altitude" do
+    @fp.cruise = 39000
+    @fp.cruise.must_equal 39000
+  end
+  
+  it "converts a cruising altitude with the letters 'FL' in the string" do
+    @fp.cruise = 'FL370'
+    @fp.cruise.must_equal 37000
+  end
+  
+  it "converts a cruising altitude flight level where 'FL' is omitted" do
+    @fp.cruise = 350
+    @fp.cruise.must_equal 35000
+    
+    @fp.cruise = '330'
+    @fp.cruise.must_equal 33000
+  end
+  
 end
