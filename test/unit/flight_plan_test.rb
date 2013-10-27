@@ -120,6 +120,16 @@ describe ATCTools::FlightPlan do
     @fp.altitude_valid?.must_equal false
   end
   
+  # Added due to bug.
+  it "validates KPDX to KSEA as an even cruise altitude" do
+    @fp.arrive = ATCTools::Airport.new(:KSEA)
+    @fp.cruise = 31000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 30000
+    @fp.altitude_valid?.must_equal true
+  end
+  
   it "warns about barometer for FL180, FL190, FL200" do
     skip
   end

@@ -60,6 +60,11 @@ describe ATCTools::Airport do
     @airport.magnetic_heading_to(:KLAX).must_be_close_to 163.2 - @airport.variance, 0.3
   end
   
+  it "adds 360 to negative headings" do
+    # KPDX to KSEA
+    @airport.magnetic_heading_to(:KSEA).must_be_close_to 5.9 - @airport.variance + 360.0, 0.3
+  end
+  
   it "caches heading calculations" do
     skip
   end
