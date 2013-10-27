@@ -16,7 +16,7 @@ module ATCTools
     # Alternate airport.
     attr_accessor :alternate
     # Cruising altitude.
-    attr_accessor :cruise
+    attr_reader :cruise
     # Squawk code.
     attr_accessor :squawk
     # Flight route.
@@ -88,6 +88,18 @@ module ATCTools
       end
       
       false
+    end
+    
+    # Cruising altitude.
+    # Can accept a standard cruising altitude (33000) or flight level (FL370).
+    def cruise=(value)
+      # Strip letters from the cruising altitude.
+      v = value.to_s.gsub(/[a-zA-Z]/, '').to_i
+      
+      # Append two zeros if the altitude is a flight level (three digits).
+      v *= 100 if v < 1000
+      
+      @cruise = v
     end
     
     # Validate the flight plan.
