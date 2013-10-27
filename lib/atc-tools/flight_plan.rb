@@ -62,7 +62,10 @@ module ATCTools
       @heading = @depart.magnetic_heading_to @arrive unless @heading
       
       # Strip the zeros off of the altitude for even/odd comparison.
-      cruise_stripped = @cruise.to_s.gsub(/0/, '').to_i
+      len = 0
+      len = 1 if @cruise.to_s.length >= 5
+      cruise_stripped = @cruise.to_s[0..len].to_i
+      
       is_north_east = (@heading < 180 || @heading >= 360)
       
       rules = @rules.upcase.to_sym

@@ -123,10 +123,17 @@ describe ATCTools::FlightPlan do
   # Added due to bug.
   it "validates KPDX to KSEA as an even cruise altitude" do
     @fp.arrive = ATCTools::Airport.new(:KSEA)
+    
     @fp.cruise = 31000
     @fp.altitude_valid?.must_equal false
     
     @fp.cruise = 30000
+    @fp.altitude_valid?.must_equal true
+    
+    @fp.cruise = 7000
+    @fp.altitude_valid?.must_equal false
+    
+    @fp.cruise = 6000
     @fp.altitude_valid?.must_equal true
   end
   
