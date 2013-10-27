@@ -87,13 +87,17 @@ module ATCTools
     # Convert a true heading to magnetic based on the airport's
     # magnetic variance.
     def true_to_magnetic(heading)
-      heading - @variance
+      value = heading - @variance
+      value += 360.0 if value < 0
+      value
     end
     
     # Convert a magnetic heading to true based on the airport's
     # magnetic variance.
     def magnetic_to_true(heading)
-      heading + @variance
+      value = heading + @variance
+      value -= 360.0 if value > 360.0
+      value
     end
     
     # Print the Airport ICAO code.
