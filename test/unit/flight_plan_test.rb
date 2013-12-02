@@ -195,4 +195,19 @@ describe ATCTools::FlightPlan do
     @fp.cruise.must_equal 33000
   end
   
+  # Due to bug.
+  it "validates Anchorage PANC" do
+    skip
+  end
+  
+  # Due to bug.
+  it "validates Honolulu PHNL" do
+    skip
+  end
+  
+  # Due to bug.
+  it "validates Amsterdam EHAM" do
+    skip
+  end
+  
 end
